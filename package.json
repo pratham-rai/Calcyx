@@ -1,0 +1,15 @@
+{
+  "name": "calcyx",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Calcyx — 100+ instant calculators. Finance, health, math, conversions & more. Free, offline-capable PWA.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "node generate-sitemap.js && vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^6.3.0"
+  }
+}

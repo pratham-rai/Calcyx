@@ -1,0 +1,19 @@
+{
+  "name": "Calcyx — 100+ Instant Calculators",
+  "short_name": "Calcyx",
+  "description": "Progressive Web App featuring Simple/Scientific calculators and 25+ specialized tools for finance, health, math, and conversions.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f4f6fa",
+  "theme_color": "#013777",
+  "orientation": "portrait-primary",
+  "categories": ["utilities", "finance", "productivity"],
+  "icons": [
+    {
+      "src": "/logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

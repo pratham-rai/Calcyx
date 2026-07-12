@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <defs>
+    <!-- Dark Mode Branded Gradient -->
+    <linearGradient id="calcyx-grad" x1="0%" y1="0%" x2="100%" x2="100%">
+      <stop offset="0%" stop-color="#7c6aff" />
+      <stop offset="100%" stop-color="#00d4aa" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="100" height="100" rx="22" fill="#07080f" />
+  <rect width="96" height="96" x="2" y="2" rx="20" fill="none" stroke="url(#calcyx-grad)" stroke-width="2" opacity="0.3" />
+
+  <!-- Stylized Geometric "C" & Mathematical Grid -->
+  <g transform="translate(15, 15)">
+    <!-- Plus symbol in top right -->
+    <path d="M52 18h8v6h-8v8h-6v-8h-8v-6h8v-8h6z" fill="url(#calcyx-grad)" opacity="0.8" />
+    
+    <!-- Minus symbol in bottom left -->
+    <path d="M12 48h18v6h-18z" fill="url(#calcyx-grad)" opacity="0.8" />
+    
+    <!-- Stylized "C" Arc (Calcyx) -->
+    <path d="M50 54 A 26 26 0 1 1 50 16" fill="none" stroke="url(#calcyx-grad)" stroke-width="10" stroke-linecap="round" filter="url(#glow)" />
+  </g>
+</svg>
