@@ -31,6 +31,22 @@ class Router {
   }
 
   /**
+   * Standardize any path to be app-relative (starting with '/')
+   * by stripping the BASE_PATH if present.
+   * E.g. /Calcyx/category/math -> /category/math
+   */
+  _getAppPath(path) {
+    if (BASE_PATH && path.startsWith(BASE_PATH)) {
+      let relative = path.slice(BASE_PATH.length);
+      if (!relative.startsWith('/')) {
+        relative = '/' + relative;
+      }
+      return relative;
+    }
+    return path.startsWith('/') ? path : '/' + path;
+  }
+
+  /**
    * Register a route pattern with a lazy-loader function
    * @param {string} pattern - e.g. '/' or '/calculators/:slug'
    * @param {Function} handler - async function(params) => { render, mount?, meta? }
@@ -41,10 +57,11 @@ class Router {
 
   /**
    * Navigate to a new URL
-   * @param {string} path  — always pass app-relative paths starting with '/'
+   * @param {string} path  — can be app-relative (e.g. '/category/math') or root-relative (e.g. '/Calcyx/category/math')
    */
   async navigate(path) {
-    const fullPath = BASE_PATH + path;
+    const appPath = this._getAppPath(path);
+    const fullPath = BASE_PATH + appPath;
     if (fullPath === window.location.pathname) return;
     history.pushState(null, '', fullPath);
     await this.handleRoute();
