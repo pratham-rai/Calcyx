@@ -8,6 +8,7 @@ import './styles/calculator.css';
 
 import { router } from './router.js';
 import { calculators } from './calculators/registry.js';
+import { initInteractions } from './interactions.js';
 
 // 1. Register SPA Routes
 router.register('/', () => import('./pages/home.js'));
@@ -52,9 +53,10 @@ document.addEventListener('mouseover', (e) => {
   }
 });
 
-// 3. Boot client-side router
+// 3. Boot client-side router + interactions
 document.addEventListener('DOMContentLoaded', () => {
   router.handleRoute();
+  initInteractions();
 });
 
 // 4. Register Progressive Web App (PWA) Service Worker
