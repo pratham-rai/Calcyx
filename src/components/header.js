@@ -4,15 +4,21 @@
 
 import { getTheme, setTheme } from '../utils/storage.js';
 
+// Resolve paths relative to the deploy base (/ on localhost, /Calcyx/ on GitHub Pages)
+const BASE = import.meta.env.BASE_URL;
+
 export function renderHeader() {
   const header = document.createElement('header');
   header.className = 'header';
 
-  // Check if logo exists in folder, otherwise default fallback spans
+  const logoSrc = `${BASE}logo.png`;
+  const logoFallback = `${BASE}logo.svg`;
+
   header.innerHTML = `
     <div class="header-inner">
-      <a href="/" class="header-logo" id="logo-link">
-        <img src="/logo.png" alt="Calcyx Logo" class="header-logo-icon" onerror="this.src='/logo.svg'; this.onerror=()=> { this.style.display='none'; document.getElementById('logo-text-fallback').style.display='inline'; }"/>
+      <a href="${BASE}" class="header-logo" id="logo-link">
+        <img src="${logoSrc}" alt="Calcyx Logo" class="header-logo-icon"
+          onerror="this.src='${logoFallback}'; this.onerror=function(){ this.style.display='none'; var fb=document.getElementById('logo-text-fallback'); if(fb) fb.style.display='inline'; };"/>
         <span id="logo-text-fallback" style="display:none">Calcyx</span>
         <span id="logo-branded-text">Calcyx</span>
       </a>
@@ -47,7 +53,7 @@ export function updateBreadcrumbs(crumbs = []) {
     return;
   }
 
-  let html = `<a href="/">Home</a>`;
+  let html = `<a href="${BASE}">Home</a>`;
   crumbs.forEach((crumb, idx) => {
     html += ` <span class="separator">/</span> `;
     if (crumb.url && idx < crumbs.length - 1) {
