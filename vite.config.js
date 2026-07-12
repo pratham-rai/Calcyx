@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 
 export default defineConfig({
+  base: '/Calcyx/',
   root: '.',
   publicDir: 'public',
   build: {

@@ -27,11 +27,11 @@
   <meta name="twitter:image" content="https://calcyx.com/logo.png" />
 
   <!-- PWA -->
-  <link rel="manifest" href="/manifest.json" />
+  <link rel="manifest" href="manifest.json" />
   <meta name="theme-color" content="#013777" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -53,6 +53,28 @@
   </script>
 </head>
 <body>
+  <!-- GitHub Pages SPA redirect restorer -->
+  <!-- Decodes the ?p= path injected by 404.html and replaces history state -->
+  <script>
+    (function() {
+      var search = window.location.search;
+      if (search && search.indexOf('p=') !== -1) {
+        var params = search.slice(1).split('&').reduce(function(acc, s) {
+          var r = s.split('=');
+          acc[decodeURIComponent(r[0])] = r.slice(1).join('=').replace(/~and~/g, '&');
+          return acc;
+        }, {});
+        if (params.p !== undefined) {
+          window.history.replaceState(
+            null, null,
+            window.location.pathname.split('?')[0] + params.p +
+            (params.q ? '?' + params.q : '') +
+            window.location.hash
+          );
+        }
+      }
+    })();
+  </script>
   <div id="app"></div>
   <script type="module" src="/src/main.js"></script>
 </body>

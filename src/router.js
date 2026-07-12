@@ -2,6 +2,10 @@
    CALCYX — Client-Side Router (History API)
    ============================================================ */
 
+// Base path for GitHub Pages deployment (e.g. '/Calcyx')
+// On localhost this is '' so everything still works normally
+const BASE_PATH = import.meta.env.BASE_URL.replace(/\/$/, '') || '';
+
 class Router {
   constructor() {
     /** @type {Map<string, Function>} */
@@ -37,11 +41,12 @@ class Router {
 
   /**
    * Navigate to a new URL
-   * @param {string} path
+   * @param {string} path  — always pass app-relative paths starting with '/'
    */
   async navigate(path) {
-    if (path === window.location.pathname) return;
-    history.pushState(null, '', path);
+    const fullPath = BASE_PATH + path;
+    if (fullPath === window.location.pathname) return;
+    history.pushState(null, '', fullPath);
     await this.handleRoute();
   }
 
@@ -52,7 +57,11 @@ class Router {
     if (this.isTransitioning) return;
     this.isTransitioning = true;
 
-    const path = window.location.pathname;
+    // Strip the deploy base so route patterns always start from '/'
+    const rawPath = window.location.pathname;
+    const path = rawPath.startsWith(BASE_PATH)
+      ? rawPath.slice(BASE_PATH.length) || '/'
+      : rawPath;
     const app = document.getElementById('app');
 
     // Clean up previous page
@@ -212,7 +221,7 @@ class Router {
             <p class="text-secondary" style="margin-top:var(--space-md)">
               The calculator you're looking for doesn't exist.
             </p>
-            <a href="/" class="btn btn-primary" style="margin-top:var(--space-xl)">
+            <a href="${BASE_PATH}/" class="btn btn-primary" style="margin-top:var(--space-xl)">
               ← Back to Home
             </a>
           </div>
@@ -235,7 +244,7 @@ class Router {
             <p class="text-secondary" style="margin-top:var(--space-md)">
               ${error.message || 'An unexpected error occurred.'}
             </p>
-            <a href="/" class="btn btn-primary" style="margin-top:var(--space-xl)">
+            <a href="${BASE_PATH}/" class="btn btn-primary" style="margin-top:var(--space-xl)">
               ← Back to Home
             </a>
           </div>
